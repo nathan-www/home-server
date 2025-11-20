@@ -15,6 +15,31 @@ services:
       APACHE_IP_BINDING: 127.0.0.1
       SKIP_DOMAIN_VALIDATION: true
 
+  caddy:
+    image: caddy:alpine
+    restart: always
+    container_name: caddy
+    volumes:
+      - caddy_certs:/certs
+      - caddy_config:/config
+      - caddy_data:/data
+      - caddy_sites:/srv
+    network_mode: 'host'
+    configs:
+      - source: Caddyfile
+        target: /etc/caddy/Caddyfile
+configs:
+  Caddyfile:
+    content: |
+      https://cloud.internal:443 {
+        tls internal
+        reverse_proxy localhost:11000
+      }
+
 volumes:
   nextcloud_aio_mastercontainer:
     name: nextcloud_aio_mastercontainer
+  caddy_certs:
+  caddy_config:
+  caddy_data:
+  caddy_sites:

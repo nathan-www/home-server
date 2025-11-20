@@ -1,39 +1,42 @@
 services:
   nextcloud-aio-mastercontainer:
     image: ghcr.io/nextcloud-releases/all-in-one:beta
-    init: true
-    restart: always
     container_name: nextcloud-aio-mastercontainer
+    restart: always
+    init: true
     volumes:
       - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    network_mode: bridge
-    ports:
-      - 8080:8080
+    networks:
+      - nextcloud-net
     environment:
       APACHE_PORT: 11000
-      APACHE_IP_BINDING: 127.0.0.1
+      APACHE_IP_BINDING: 0.0.0.0   # bind Apache to all interfaces inside container
       SKIP_DOMAIN_VALIDATION: true
 
   caddy:
     image: caddy:alpine
-    restart: always
     container_name: caddy
+    restart: always
     volumes:
       - caddy_certs:/certs
       - caddy_config:/config
       - caddy_data:/data
       - caddy_sites:/srv
-    network_mode: 'host'
+    networks:
+      - nextcloud-net
+    ports:
+      - 443:443   # expose HTTPS to the outside world
     configs:
       - source: Caddyfile
         target: /etc/caddy/Caddyfile
+
 configs:
   Caddyfile:
     content: |
-      https://0.0.0.0:443 {
-        tls internal
-        reverse_proxy localhost:11000
+      https://cloud.internal {
+          tls internal
+          reverse_proxy nextcloud-aio-mastercontainer:11000
       }
 
 volumes:
@@ -43,3 +46,7 @@ volumes:
   caddy_config:
   caddy_data:
   caddy_sites:
+
+networks:
+  nextcloud-net:
+    driver: bridge

@@ -33,6 +33,7 @@ configs:
   Caddyfile:
     content: |
       https://cloud.internal:443 {
+        bind 10.8.0.1
         tls internal
         reverse_proxy 127.0.0.1:11000
       }

@@ -7,9 +7,10 @@ services:
     volumes:
       - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    network_mode: bridge
+    networks:
+      - nextcloud-aio
     ports:
-      - 8080:8080
+      - 0.0.0.0:8080:8080
     environment:
       APACHE_PORT: 11000
       APACHE_IP_BINDING: 127.0.0.1
@@ -43,3 +44,11 @@ volumes:
   caddy_config:
   caddy_data:
   caddy_sites:
+
+networks:
+  nextcloud-aio:
+    name: nextcloud-aio
+    driver: bridge
+    enable_ipv6: false
+    driver_opts:
+      com.docker.network.bridge.host_binding_ipv4: "127.0.0.1"

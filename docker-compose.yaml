@@ -1,3 +1,10 @@
+networks:
+   vpn-net:
+     name: vpn-net
+     ipam:
+       config:
+         - subnet: 10.200.200.0/24
+
 services:
   nextcloud-aio-mastercontainer:
     image: ghcr.io/nextcloud-releases/all-in-one:beta
@@ -7,12 +14,12 @@ services:
     volumes:
       - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    network_mode: bridge
-    ports:
-      - 8080:8080
+    networks:
+      vpn-net:
+        ipv4_address: 10.200.200.10
     environment:
       APACHE_PORT: 11000
-      APACHE_IP_BINDING: 127.0.0.1
+      APACHE_IP_BINDING: 10.200.200.10
       SKIP_DOMAIN_VALIDATION: true
 
   caddy:
@@ -24,16 +31,19 @@ services:
       - caddy_config:/config
       - caddy_data:/data
       - caddy_sites:/srv
-    network_mode: 'host'
+    networks:
+      vpn-net:
+        ipv4_address: 10.200.200.11
     configs:
       - source: Caddyfile
         target: /etc/caddy/Caddyfile
+
 configs:
   Caddyfile:
     content: |
       https://cloud.internal:443 {
         tls internal
-        reverse_proxy localhost:11000
+        reverse_proxy 10.200.200.10:11000
       }
 
 volumes:

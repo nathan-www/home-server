@@ -1,55 +1,24 @@
 services:
-  nextcloud-aio-mastercontainer:
-    image: ghcr.io/nextcloud-releases/all-in-one:beta
-    init: true
-    restart: always
-    container_name: nextcloud-aio-mastercontainer
-    volumes:
-      - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    networks:
-      - nextcloud-aio
-    ports:
-      - 8080:8080
+  nextcloud:
+    image: lscr.io/linuxserver/nextcloud:latest
+    container_name: nextcloud
     environment:
-      APACHE_PORT: 11000
-      APACHE_IP_BINDING: 127.0.0.1
-      SKIP_DOMAIN_VALIDATION: true
-
-  caddy:
-    image: caddy:alpine
-    restart: always
-    container_name: caddy
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
     volumes:
-      - caddy_certs:/certs
-      - caddy_config:/config
-      - caddy_data:/data
-      - caddy_sites:/srv
-    network_mode: 'host'
-    configs:
-      - source: Caddyfile
-        target: /etc/caddy/Caddyfile
-configs:
-  Caddyfile:
-    content: |
-      https://cloud.internal:443 {
-        bind 10.8.0.1
-        tls internal
-        reverse_proxy 127.0.0.1:11000
-      }
+      - /srv/nextcloud/config:/config
+      - /srv/nextcloud/data:/data
+    ports:
+      - 443:443
+    restart: unless-stopped
 
-volumes:
-  nextcloud_aio_mastercontainer:
-    name: nextcloud_aio_mastercontainer
-  caddy_certs:
-  caddy_config:
-  caddy_data:
-  caddy_sites:
-
-networks:
-  nextcloud-aio:
-    name: nextcloud-aio
-    driver: bridge
-    enable_ipv6: false
-    driver_opts:
-      com.docker.network.bridge.host_binding_ipv4: "127.0.0.1"
+  yacht:
+    container_name: yacht
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - yacht:/config
+      - /var/run/docker.sock:/var/run/docker.sock
+    image: selfhostedpro/yacht

@@ -26,7 +26,7 @@ services:
       - MYSQL_USER=nextcloud
       - MYSQL_HOST=nextcloud-db
     extra_hosts:
-     - "cloud.internal:127.0.0.1"
+      - "cloud.internal:127.0.0.1"
 
   caddy:
     image: caddy:alpine

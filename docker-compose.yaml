@@ -11,14 +11,19 @@ services:
       - /srv/nextcloud/data:/data
     ports:
       - 443:443
-    restart: unless-stopped
+    restart: always
 
-  yacht:
-    container_name: yacht
-    restart: unless-stopped
-    ports:
-      - "8000:8000"
+  portainer:
+    container_name: portainer
+    image: portainer/portainer-ce:lts
+    restart: always
     volumes:
-      - yacht:/config
       - /var/run/docker.sock:/var/run/docker.sock
-    image: selfhostedpro/yacht
+      - portainer_data:/data
+    ports:
+      - 9443:9443
+      
+volumes:
+  portainer_data:
+    name: portainer_data
+

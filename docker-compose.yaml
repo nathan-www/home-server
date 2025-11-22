@@ -1,3 +1,6 @@
+env_file:
+  - /srv/docker_secrets/secrets.env
+  
 services:
 
   nextcloud-db:
@@ -7,13 +10,10 @@ services:
     volumes:
       - /srv/docker_data/nextcloud_db:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/nextcloud_db_mysql_root_password
-      - MYSQL_PASSWORD_FILE=/run/secrets/nextcloud_db_mysql_password
+      - MYSQL_ROOT_PASSWORD=${NEXTCLOUD_DB_MYSQL_ROOT_PASSWORD}
+      - MYSQL_PASSWORD=${NEXTCLOUD_DB_MYSQL_PASSWORD}
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=nextcloud
-    secrets:
-      - nextcloud_db_mysql_root_password
-      - nextcloud_db_mysql_password
   
   nextcloud:
     image: nextcloud
@@ -25,12 +25,10 @@ services:
     volumes:
       - /srv/docker_data/nextcloud:/var/www/html
     environment:
-      - MYSQL_PASSWORD_FILE=/run/secrets/nextcloud_db_mysql_password
+      - MYSQL_PASSWORD=${NEXTCLOUD_DB_MYSQL_PASSWORD}
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=nextcloud
       - MYSQL_HOST=nextcloud-db
-    secrets:
-      - nextcloud_db_mysql_password
 
   portainer:
     container_name: portainer
@@ -41,10 +39,4 @@ services:
       - /srv/docker_data/portainer:/data
     ports:
       - 9443:9443
-
-secrets:
-  nextcloud_db_mysql_root_password:
-    file: /srv/docker_secrets/nextcloud_db_mysql_root_password.txt
-  nextcloud_db_mysql_password:
-    file: /srv/docker_secrets/nextcloud_db_mysql_password.txt
 

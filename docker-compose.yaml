@@ -38,6 +38,7 @@ services:
       - /srv/docker_data/caddy/srv:/srv
     ports:
       - 443:443
+      - 80:80
     configs:
       - source: Caddyfile
         target: /etc/caddy/Caddyfile

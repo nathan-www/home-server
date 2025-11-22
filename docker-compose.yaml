@@ -21,14 +21,14 @@ services:
     ports:
       - 80:80
     links:
-      - db
+      - nextcloud-db
     volumes:
       - /srv/docker_data/nextcloud:/var/www/html
     environment:
       - MYSQL_PASSWORD_FILE=/run/secrets/nextcloud_db_mysql_password
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=nextcloud
-      - MYSQL_HOST=db
+      - MYSQL_HOST=nextcloud-db
     secrets:
       - nextcloud_db_mysql_password
 

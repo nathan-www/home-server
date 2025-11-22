@@ -7,8 +7,8 @@ services:
       - PGID=1000
       - TZ=Etc/UTC
     volumes:
-      - /srv/nextcloud/config:/config
-      - /srv/nextcloud/data:/data
+      - /srv/docker_data/nextcloud/config:/config
+      - /srv/docker_data/nextcloud/data:/data
     ports:
       - 443:443
     restart: always
@@ -19,11 +19,7 @@ services:
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - portainer_data:/data
+      - /srv/docker_data/portainer:/data
     ports:
       - 9443:9443
-      
-volumes:
-  portainer_data:
-    name: portainer_data
 

@@ -59,6 +59,9 @@ configs:
         tls internal
         reverse_proxy nextcloud:80
       }
+      http://cloud.internal:80 {
+        redir https://cloud.internal{uri}
+      }
 
 
 

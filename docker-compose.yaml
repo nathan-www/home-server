@@ -15,6 +15,13 @@ services:
       APACHE_PORT: 11000
       APACHE_IP_BINDING: 127.0.0.1
       SKIP_DOMAIN_VALIDATION: true
+      
+  dns:
+    image: andyshinn/dnsmasq:2.85
+    container_name: dnsmasq
+    network_mode: host
+    command: ["-A", "/cloud.internal/10.8.0.1", "-k"]
+    restart: always
 
   caddy:
     image: caddy:alpine

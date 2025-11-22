@@ -11,7 +11,7 @@ services:
       - MYSQL_PASSWORD=${NEXTCLOUD_DB_MYSQL_PASSWORD}
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=nextcloud
-  
+     
   nextcloud:
     image: nextcloud
     restart: always
@@ -27,8 +27,10 @@ services:
       - MYSQL_HOST=nextcloud-db
     extra_hosts:
       - "cloud.internal:127.0.0.1"
+    networks:
+      - nextcloud-net
 
-  caddy:
+  nextcloud-proxy:
     image: caddy:alpine
     restart: always
     volumes:
@@ -42,6 +44,8 @@ services:
     configs:
       - source: Caddyfile
         target: /etc/caddy/Caddyfile
+    networks:
+      - nextcloud-net
 
   portainer:
     container_name: portainer
@@ -63,6 +67,10 @@ configs:
       http://cloud.internal:80 {
         redir https://cloud.internal{uri}
       }
+
+networks:
+  nextcloud-net:
+    driver: bridge
 
 
 

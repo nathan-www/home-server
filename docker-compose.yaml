@@ -16,15 +16,6 @@ services:
       APACHE_IP_BINDING: 127.0.0.1
       SKIP_DOMAIN_VALIDATION: true
 
-  dns:
-    image: andyshinn/dnsmasq:2.85
-    container_name: dnsmasq
-    networks:
-      nextcloud-aio:
-        ipv4_address: 172.20.0.5
-    command: ["-A", "/cloud.internal/10.8.0.1", "-k"]
-    restart: always
-
   caddy:
     image: caddy:alpine
     restart: always
@@ -62,5 +53,3 @@ networks:
     enable_ipv6: false
     driver_opts:
       com.docker.network.bridge.host_binding_ipv4: "127.0.0.1"
-    dns:
-      - 172.20.0.5

@@ -30,6 +30,20 @@ services:
     extra_hosts:
      - "cloud.internal:127.0.0.1"
 
+  caddy:
+    image: caddy:alpine
+    restart: always
+    volumes:
+      - /srv/docker_data/caddy/certs:/certs
+      - /srv/docker_data/caddy/config:/config
+      - /srv/docker_data/caddy/data:/data
+      - /srv/docker_data/caddy/srv:/srv
+    ports:
+      - 443:443
+    configs:
+      - source: Caddyfile
+        target: /etc/caddy/Caddyfile
+
   portainer:
     container_name: portainer
     image: portainer/portainer-ce:2.20.2 # Temporary downgrade due to bug https://github.com/orgs/portainer/discussions/12926
@@ -39,4 +53,15 @@ services:
       - /srv/docker_data/portainer:/data
     ports:
       - 9443:9443
+
+configs:
+  Caddyfile:
+    content: |
+      https://cloud.internal:443 {
+        tls internal
+        reverse_proxy nextcloud:80
+      }
+
+
+
 

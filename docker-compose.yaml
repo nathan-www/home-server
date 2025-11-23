@@ -30,6 +30,18 @@ services:
     networks:
       - nextcloud-net
 
+  nextcloud-collabora:
+    image: collabora/code:latest
+    restart: always
+    environment:
+      - password=${COLLABORA_PASSWORD}
+      - username=collabora
+      - aliasgroup1=https://cloud.internal:443
+      - server_name=collabora.cloud.internal
+      - extra_params=--o:ssl.enable=true
+    networks:
+      - nextcloud-net
+
   nextcloud-proxy:
     image: caddy:alpine
     restart: always
@@ -42,7 +54,7 @@ services:
       - 443:443
       - 80:80
     configs:
-      - source: Caddyfile
+      - source: nextcloud-proxy-caddyfile
         target: /etc/caddy/Caddyfile
     networks:
       nextcloud-net:
@@ -59,7 +71,7 @@ services:
       - 9443:9443
 
 configs:
-  Caddyfile:
+  nextcloud-proxy-caddyfile:
     content: |
       https://cloud.internal:443 {
         tls internal
@@ -67,6 +79,9 @@ configs:
       }
       http://cloud.internal:80 {
         reverse_proxy nextcloud:80
+      }
+      https://collabora.cloud.internal:443 {
+        reverse_proxy nextcloud-collabora:443
       }
 
 networks:

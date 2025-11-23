@@ -5,7 +5,7 @@ services:
     container_name: wg-easy
     networks:
       vpn-net:
-        ipv4_address: 10.42.42.42
+        ipv4_address: 10.8.0.8
     volumes:
       - /srv/docker_data/wireguard:/etc/wireguard
       - /lib/modules:/lib/modules:ro

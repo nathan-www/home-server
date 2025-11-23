@@ -43,8 +43,6 @@ services:
       - aliasgroup4=https://collabora.cloud.internal
       - server_name=collabora.cloud.internal
       - extra_params=--o:ssl.enable=true
-    ports:
-      - 9980:9980
     networks:
       - nextcloud-net
 

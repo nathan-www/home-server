@@ -81,7 +81,7 @@ configs:
         reverse_proxy nextcloud:80
       }
       https://collabora.cloud.internal:443 {
-        reverse_proxy nextcloud-collabora:443
+        reverse_proxy nextcloud-collabora:9980
       }
 
 networks:

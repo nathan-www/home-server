@@ -10,10 +10,7 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Etc/UTC
-      - PEERS=1
-      - PEERDNS=auto
       - SERVERPORT=51820
-      - ALLOWEDIPS=10.8.0.0/24 # 10.8.0.0 - 10.8.0.255
     volumes:
       - /srv/docker_data/wireguard/config:/config/wg_confs
       - /lib/modules:/lib/modules
@@ -27,6 +24,7 @@ services:
 
     wireguard-portal:
       image: wgportal/wg-portal:v2
+      restart: always
       cap_add:
         - NET_ADMIN
       network_mode: "service:wireguard"

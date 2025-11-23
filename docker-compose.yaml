@@ -26,10 +26,11 @@ services:
       - MYSQL_USER=nextcloud
       - MYSQL_HOST=nextcloud-db
     extra_hosts:
-      - "cloud.internal:172.20.0.10"
-      - "collabora.cloud.internal:172.20.0.10"
+      - "cloud.internal:172.20.0.11"
+      - "collabora.cloud.internal:172.20.0.12"
     networks:
-      - nextcloud-net
+      nextcloud-net:
+        ipv4_address: 172.20.0.11
 
   nextcloud-collabora:
     image: collabora/code:latest
@@ -43,10 +44,11 @@ services:
       - aliasgroup4=https://collabora.cloud.internal:443
       - server_name=collabora.cloud.internal
     extra_hosts:
-      - "cloud.internal:172.20.0.10"
-      - "collabora.cloud.internal:172.20.0.10"
+      - "cloud.internal:172.20.0.11"
+      - "collabora.cloud.internal:172.20.0.12"
     networks:
-      - nextcloud-net
+      nextcloud-net:
+        ipv4_address: 172.20.0.12
 
   nextcloud-proxy:
     image: caddy:alpine

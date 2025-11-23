@@ -19,8 +19,6 @@ services:
       - 8888:8888
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
-    networks:
-      - vpn-net
 
   wireguard-portal:
     image: wgportal/wg-portal:v2

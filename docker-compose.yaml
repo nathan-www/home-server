@@ -88,10 +88,10 @@ configs:
         @internal {
           remote_ip 172.20.0.0/16
         }  
-        reverse_proxy nextcloud:80
+        reverse_proxy @internal nextcloud:80
         
         @external {
-            not remote_ip 72.20.0.0/16
+            not remote_ip 172.20.0.0/16
         }
         redir @external https://cloud.internal{uri}
       }

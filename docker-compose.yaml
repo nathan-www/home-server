@@ -28,6 +28,8 @@ services:
     cap_add:
       - NET_ADMIN
     network_mode: "service:wireguard-vpn"
+    ports:
+      - 8888:8888
     volumes:
       - /srv/docker_data/wireguard/config:/etc/wireguard
       - /srv/docker_data/wireguard_portal/data:/app/data

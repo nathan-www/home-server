@@ -6,7 +6,6 @@ services:
     networks:
       vpn-net:
         ipv4_address: 10.8.0.8
-        ipv6_address: fdcc:ad94:bacf:61a3::2a
     volumes:
       - /srv/docker_data/wireguard:/etc/wireguard
       - /lib/modules:/lib/modules:ro
@@ -133,12 +132,10 @@ configs:
 networks:
   vpn-net:
     driver: bridge
-    enable_ipv6: true
     ipam:
       driver: default
       config:
         - subnet: 10.8.0.0/24
-        - subnet: fdcc:ad94:bacf:61a3::/64
         
   nextcloud-net:
     driver: bridge

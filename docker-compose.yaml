@@ -1,37 +1,24 @@
 services:
 
   wireguard-vpn:
-    image: lscr.io/linuxserver/wireguard:latest
+    image: ghcr.io/wg-easy/wg-easy
     restart: always
+    volumes:
+      - /srv/docker_data/wireguard:/etc/wireguard
+      - /lib/modules:/lib/modules:ro
+    environment:
+      - INSECURE=true
+    ports:
+      - 51820:51820/udp
+      - 51821:51821/tcp
     cap_add:
       - NET_ADMIN
       - SYS_MODULE
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
-      - SERVERPORT=51820
-    volumes:
-      - /srv/docker_data/wireguard/config:/config/wg_confs
-      - /lib/modules:/lib/modules
-    ports:
-      - 51820:51820/udp
-      - 8888:8888
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
     networks:
-      - vpn-net
-
-  wireguard-portal:
-    image: wgportal/wg-portal:v2
-    restart: always
-    cap_add:
-      - NET_ADMIN
-    network_mode: "service:wireguard-vpn"
-    volumes:
-      - /srv/docker_data/wireguard/config:/etc/wireguard
-      - /srv/docker_data/wireguard_portal/data:/app/data
-      - /srv/docker_data/wireguard_portal/config:/app/config
+      vpn-net:
+        ipv4_address: 10.8.0.1
 
   nextcloud-db:
     image: mariadb:10.6
@@ -117,7 +104,7 @@ configs:
     content: |
       https://cloud.internal:443 {
         tls internal
-        reverse_proxy wireguard-vpn:8888
+        reverse_proxy nextcloud:8888
       }
       http://cloud.internal:80 {
         @internal {
@@ -147,6 +134,7 @@ networks:
   vpn-net:
     driver: bridge
     ipam:
+      driver: default
       config:
         - subnet: 10.8.0.0/24
         

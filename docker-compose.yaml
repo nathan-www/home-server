@@ -22,16 +22,16 @@ services:
     networks:
       - vpn-net
 
-    wireguard-portal:
-      image: wgportal/wg-portal:v2
-      restart: always
-      cap_add:
-        - NET_ADMIN
-      network_mode: "service:wireguard"
-      volumnes:
-        - /srv/docker_data/wireguard/config:/etc/wireguard
-        - /srv/docker_data/wireguard_portal/data:/app/data
-        - /srv/docker_data/wireguard_portal/config:/app/config
+  wireguard-portal:
+    image: wgportal/wg-portal:v2
+    restart: always
+    cap_add:
+      - NET_ADMIN
+    network_mode: "service:wireguard"
+    volumnes:
+      - /srv/docker_data/wireguard/config:/etc/wireguard
+      - /srv/docker_data/wireguard_portal/data:/app/data
+      - /srv/docker_data/wireguard_portal/config:/app/config
 
   nextcloud-db:
     image: mariadb:10.6

@@ -42,6 +42,7 @@ services:
       - aliasgroup3=https://cloud.internal:443
       - aliasgroup4=https://collabora.cloud.internal:443
       - server_name=collabora.cloud.internal
+      - extra_params=--o:ssl.enable=true
     extra_hosts:
       - "cloud.internal:172.20.0.10"
       - "collabora.cloud.internal:172.20.0.10"
@@ -84,13 +85,14 @@ configs:
         reverse_proxy nextcloud:80
       }
       http://cloud.internal:80 {
-        redir https://cloud.internal{uri}
+        reverse_proxy nextcloud:80
       }
       https://collabora.cloud.internal {
         reverse_proxy nextcloud-collabora:9980 {
           transport http {
             tls_insecure_skip_verify
           }
+      
           header_up X-Forwarded-For {remote_host}
           header_up X-Forwarded-Host {host}
           header_up X-Forwarded-Proto {scheme}
@@ -104,3 +106,4 @@ networks:
     ipam:
       config:
         - subnet: 172.20.0.0/16
+    

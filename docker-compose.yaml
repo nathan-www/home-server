@@ -10,6 +10,9 @@ services:
       - /srv/docker_data/wireguard/aconf:/etc/amnezia/amneziawg
       - /srv/docker_data/wireguard/wireguard:/etc/wireguard
       - /srv/docker_data/wireguard/data:/data
+    environment:
+      - USERNAME=admin
+      - PASSWORD=${WIREGUARD_DASHBOARD_PASSWORD}
     cap_add:
       - NET_ADMIN
 

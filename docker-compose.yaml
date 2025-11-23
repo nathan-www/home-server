@@ -18,7 +18,7 @@ services:
       - net.ipv4.conf.all.src_valid_mark=1
     networks:
       vpn-net:
-        ipv4_address: 10.8.0.1
+        ipv4_address: 10.8.0.2
 
   nextcloud-db:
     image: mariadb:10.6

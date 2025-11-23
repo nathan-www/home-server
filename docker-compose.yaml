@@ -85,7 +85,15 @@ configs:
         reverse_proxy nextcloud:80
       }
       http://cloud.internal:80 {
+        @internal {
+          remote_ip 172.20.0.0/16
+        }  
         reverse_proxy nextcloud:80
+        
+        @external {
+            not remote_ip 72.20.0.0/16
+        }
+        redir @external https://cloud.internal{uri}
       }
       https://collabora.cloud.internal {
         reverse_proxy nextcloud-collabora:9980 {

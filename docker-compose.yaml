@@ -5,7 +5,7 @@ services:
     container_name: wg-easy
     networks:
       vpn-net:
-        ipv4_address: 10.42.42.42
+        ipv4_address: 10.8.0.8
         ipv6_address: fdcc:ad94:bacf:61a3::2a
     volumes:
       - /srv/docker_data/wireguard:/etc/wireguard
@@ -140,7 +140,7 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 10.42.42.0/24
+        - subnet: 10.8.0.0/24
         - subnet: fdcc:ad94:bacf:61a3::/64
         
   nextcloud-net:

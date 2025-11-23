@@ -1,5 +1,29 @@
 services:
 
+  wireguard-vpn:
+    image: lscr.io/linuxserver/wireguard:latest
+    restart: always
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - PEERS=1
+      - PEERDNS=auto
+      - SERVERPORT=51820
+      - ALLOWEDIPS=10.8.0.0/24 # 10.8.0.0 - 10.8.0.255
+    volumes:
+      - /srv/docker_data/wireguard/config:/config
+      - /lib/modules:/lib/modules
+    ports:
+      - 51820:51820/udp
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    networks:
+      - vpn-net
+
   nextcloud-db:
     image: mariadb:10.6
     restart: always
@@ -66,6 +90,8 @@ services:
     networks:
       nextcloud-net:
         ipv4_address: 172.20.0.10
+      vpn-net:
+        ipv4_addresss: 10.8.0.0
 
   portainer:
     container_name: portainer
@@ -86,7 +112,7 @@ configs:
       }
       http://cloud.internal:80 {
         @internal {
-          remote_ip 172.20.0.0/16
+          remote_ip 172.20.0.0/24
         }  
         reverse_proxy @internal nextcloud:80
         
@@ -109,9 +135,15 @@ configs:
       }
 
 networks:
+  vpn-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.8.0.0/24
+        
   nextcloud-net:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.20.0.0/16
+        - subnet: 172.20.0.0/24
     

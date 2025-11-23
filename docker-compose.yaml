@@ -27,7 +27,7 @@ services:
     restart: always
     cap_add:
       - NET_ADMIN
-    network_mode: "service:wireguard"
+    network_mode: "service:wireguard-vpn"
     volumes:
       - /srv/docker_data/wireguard/config:/etc/wireguard
       - /srv/docker_data/wireguard_portal/data:/app/data

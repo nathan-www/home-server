@@ -84,8 +84,6 @@ services:
     networks:
       nextcloud-net:
         ipv4_address: 172.20.0.10
-      vpn-net:
-        ipv4_address: 10.8.0.10
 
   portainer:
     container_name: portainer

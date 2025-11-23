@@ -26,8 +26,8 @@ services:
       - MYSQL_USER=nextcloud
       - MYSQL_HOST=nextcloud-db
     extra_hosts:
-      - "cloud.internal:172.20.0.10"
-      - "collabora.cloud.internal:172.20.0.10"
+      - "cloud.internal:nextcloud-proxy"
+      - "collabora.cloud.internal:nextcloud-proxy"
     networks:
       - nextcloud-net
 
@@ -44,8 +44,8 @@ services:
       - server_name=collabora.cloud.internal
       - extra_params=--o:ssl.enable=true
     extra_hosts:
-      - "cloud.internal:172.20.0.10"
-      - "collabora.cloud.internal:172.20.0.10"
+      - "cloud.internal:nextcloud-proxy"
+      - "collabora.cloud.internal:nextcloud-proxy"
     networks:
       - nextcloud-net
 
@@ -64,8 +64,7 @@ services:
       - source: nextcloud-proxy-caddyfile
         target: /etc/caddy/Caddyfile
     networks:
-      nextcloud-net:
-        ipv4_address: 172.20.0.10
+      - nextcloud-net
 
   portainer:
     container_name: portainer

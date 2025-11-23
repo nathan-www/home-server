@@ -39,6 +39,8 @@ services:
       - username=collabora
       - aliasgroup1=https://cloud.internal:443
       - aliasgroup2=https://collabora.cloud.internal:443
+      - aliasgroup3=https://cloud.internal
+      - aliasgroup4=https://collabora.cloud.internal
       - server_name=collabora.cloud.internal
       - extra_params=--o:ssl.enable=true
     ports:

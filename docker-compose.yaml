@@ -103,8 +103,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /srv/docker_data/portainer:/data
-    ports:
-      - 9443:9443      
+    networks:
+      - admin-tools-net
 
 networks:
   vpn-net:

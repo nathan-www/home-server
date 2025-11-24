@@ -2,7 +2,7 @@
 # Admin tools proxy
 # =======================
 
-https://portainer.cloud.internal:443 {
+https://portainer.admin.internal:443 {
   tls internal
   reverse_proxy portainer:80
 }

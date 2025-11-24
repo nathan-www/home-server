@@ -75,7 +75,7 @@ services:
       - /srv/docker_data/caddy/config:/config
       - /srv/docker_data/caddy/data:/data
       - /srv/docker_data/caddy/srv:/srv
-      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./Nextcloud_Caddyfile:/etc/caddy/Caddyfile
     networks:
       nextcloud-net:
         ipv4_address: 172.20.0.10

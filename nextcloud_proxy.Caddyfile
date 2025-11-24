@@ -1,6 +1,6 @@
-# ==============
-# Nextcloud
-# ==============
+# =======================
+# Nextcloud proxy
+# =======================
 
 https://cloud.internal:443 {
   tls internal

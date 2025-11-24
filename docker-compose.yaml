@@ -12,6 +12,8 @@ services:
     volumes:
       - /srv/docker_data/wg_portal/data:/app/data
       - /srv/docker_data/wg_portal/config:/app/config
+    networks:
+      - vpn-net
 
   nextcloud-db:
     image: mariadb:10.6

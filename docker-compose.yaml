@@ -71,10 +71,10 @@ services:
     image: caddy:alpine
     restart: always
     volumes:
-      - /srv/docker_data/caddy/certs:/certs
-      - /srv/docker_data/caddy/config:/config
-      - /srv/docker_data/caddy/data:/data
-      - /srv/docker_data/caddy/srv:/srv
+      - /srv/docker_data/nextcloud_proxy_caddy/certs:/certs
+      - /srv/docker_data/nextcloud_proxy_caddy/config:/config
+      - /srv/docker_data/nextcloud_proxy_caddy/data:/data
+      - /srv/docker_data/nextcloud_proxy_caddy/srv:/srv
       - ./nextcloud.Caddyfile:/etc/caddy/Caddyfile
     networks:
       nextcloud-net:

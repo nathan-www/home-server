@@ -1,0 +1,27 @@
+https://cloud.internal:443 {
+  tls internal
+  reverse_proxy nextcloud:80
+}
+http://cloud.internal:80 {
+  @internal {
+    remote_ip 172.20.0.0/24
+  }  
+  reverse_proxy @internal nextcloud:80
+  
+  @external {
+      not remote_ip 172.20.0.0/16
+  }
+  redir @external https://cloud.internal{uri}
+}
+https://collabora.cloud.internal {
+  reverse_proxy nextcloud-collabora:9980 {
+    transport http {
+      tls_insecure_skip_verify
+    }
+
+    header_up X-Forwarded-For {remote_host}
+    header_up X-Forwarded-Host {host}
+    header_up X-Forwarded-Proto {scheme}
+    header_up Host {host}
+  }
+}

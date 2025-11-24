@@ -92,7 +92,7 @@ services:
       - /srv/docker_data/nextcloud_proxy_caddy/srv:/srv
       - ./admin_tools_proxy.Caddyfile:/etc/caddy/Caddyfile
     networks:
-      - admin-tools-net
+      admin-tools-net:
       vpn-net:
         ipv4_address: 10.8.0.4
 

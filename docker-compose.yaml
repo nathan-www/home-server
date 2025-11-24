@@ -94,7 +94,7 @@ services:
     networks:
       admin-tools-net
       vpn-net:
-        ipv4_address: 10.8.0.3
+        ipv4_address: 10.8.0.4
 
   portainer:
     container_name: portainer

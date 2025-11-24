@@ -4,7 +4,6 @@ services:
     image: ghcr.io/wgdashboard/wgdashboard:latest
     restart: always
     ports:
-      - 10086:10086/tcp
       - 51820:51820/udp
     volumes:
       - /srv/docker_data/wireguard/aconf:/etc/amnezia/amneziawg
@@ -76,12 +75,7 @@ services:
       - /srv/docker_data/caddy/config:/config
       - /srv/docker_data/caddy/data:/data
       - /srv/docker_data/caddy/srv:/srv
-    ports:
-      - 443:443
-      - 80:80
-    configs:
-      - source: nextcloud-proxy-caddyfile
-        target: /etc/caddy/Caddyfile
+      - ./Caddyfile:/etc/caddy/Caddyfile
     networks:
       nextcloud-net:
         ipv4_address: 172.20.0.10
@@ -96,38 +90,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /srv/docker_data/portainer:/data
     ports:
-      - 9443:9443
-
-configs:
-  nextcloud-proxy-caddyfile:
-    content: |
-      https://cloud.internal:443 {
-        tls internal
-        reverse_proxy nextcloud:80
-      }
-      http://cloud.internal:80 {
-        @internal {
-          remote_ip 172.20.0.0/24
-        }  
-        reverse_proxy @internal nextcloud:80
-        
-        @external {
-            not remote_ip 172.20.0.0/16
-        }
-        redir @external https://cloud.internal{uri}
-      }
-      https://collabora.cloud.internal {
-        reverse_proxy nextcloud-collabora:9980 {
-          transport http {
-            tls_insecure_skip_verify
-          }
-      
-          header_up X-Forwarded-For {remote_host}
-          header_up X-Forwarded-Host {host}
-          header_up X-Forwarded-Proto {scheme}
-          header_up Host {host}
-        }
-      }
+      - 9443:9443      
 
 networks:
   vpn-net:

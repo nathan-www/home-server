@@ -103,7 +103,7 @@ configs:
     content: |
       https://cloud.internal:443 {
         tls internal
-        reverse_proxy nextcloud:8888
+        reverse_proxy nextcloud:443
       }
       http://cloud.internal:80 {
         @internal {

@@ -9,9 +9,12 @@ services:
       - "8888:8888/tcp"
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
+    environment:
+      - WG_PORTAL_CONFIG=/etc/wg-portal/config.yaml
     volumes:
       - /srv/docker_data/wg_portal/data:/app/data
       - /srv/docker_data/wg_portal/config:/app/config
+      - ./wireguard_config.yaml:/etc/wg-portal/config.yaml:ro
     networks:
       - vpn-net
 
@@ -87,7 +90,7 @@ services:
       - /srv/docker_data/admin_tools_proxy_caddy/config:/config
       - /srv/docker_data/admin_tools_proxy_caddy/data:/data
       - /srv/docker_data/admin_tools_proxy_caddy/srv:/srv
-      - ./admin_tools_proxy.Caddyfile:/etc/caddy/Caddyfile
+      - ./admin_tools_proxy.Caddyfile:/etc/caddy/Caddyfile:ro
     networks:
       admin-tools-net:
       vpn-net:

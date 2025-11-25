@@ -10,12 +10,10 @@ services:
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
     environment:
-      - WG_PORTAL_WEB_EXTERNAL_URL=http://49.13.87.41:8888
-      - WG_PORTAL_CORE_ADMIN_USER=admin-service-user
-      - WG_PORTAL_CORE_ADMIN_PASSWORD=${WIREGUARD_PORTAL_ADMIN_SERVICE_USER_PASSWORD}
-      - WG_PORTAL_CORE_ADMIN_API_TOKEN=${WIREGUARD_PORTAL_ADMIN_API_TOKEN}
+      - WG_PORTAL_CONFIG=/etc/wg-portal/config.yaml
     volumes:
-      - /srv/docker_data/wg_portal/data:/app/data
+      - /srv/docker_data/wg_portal/:/app/data
+      - ./config/wireguard/wgportal_config.yaml:/etc/wg-portal/config.yaml:ro
     networks:
       - vpn-net
 
@@ -76,7 +74,7 @@ services:
       - /srv/docker_data/nextcloud_proxy_caddy/config:/config
       - /srv/docker_data/nextcloud_proxy_caddy/data:/data
       - /srv/docker_data/nextcloud_proxy_caddy/srv:/srv
-      - ./nextcloud_proxy.Caddyfile:/etc/caddy/Caddyfile
+      - ./nextcloud_proxy.Caddyfile:/etc/caddy/Caddyfile:ro
     networks:
       nextcloud-net:
         ipv4_address: 172.20.0.10

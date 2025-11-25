@@ -1,4 +1,8 @@
 core:
+  admin_user: admin-service-user
+  admin_password: ${WIREGUARD_PORTAL_ADMIN_SERVICE_USER_PASSWORD}
+  admin_api_token: ${WIREGUARD_PORTAL_ADMIN_API_TOKEN}
+
   
 web:
   external_url: http://49.13.87.41:8888,

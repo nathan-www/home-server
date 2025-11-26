@@ -10,13 +10,10 @@ services:
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
     environment:
-      # - WG_PORTAL_CONFIG=/etc/wg-portal/config.yaml
-      - WG_PORTAL_WEB_EXTERNAL_URL=http://49.13.87.41:8888
-      #- WIREGUARD_PORTAL_ADMIN_SERVICE_USER_PASSWORD=${WIREGUARD_PORTAL_ADMIN_SERVICE_USER_PASSWORD}
-      #- WIREGUARD_PORTAL_ADMIN_API_TOKEN=${WIREGUARD_PORTAL_ADMIN_API_TOKEN}
+       - WG_PORTAL_CONFIG=/etc/wg-portal/config.yaml
     volumes:
       - /srv/docker_data/wg_portal/:/app/data
-      #- ./config/wireguard/wgportal_config.yaml:/etc/wg-portal/config.yaml:ro
+      - ./config/wireguard/wgportal_config.yaml:/etc/wg-portal/config.yaml:ro
     networks:
       - vpn-net
 

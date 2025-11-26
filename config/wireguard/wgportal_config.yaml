@@ -1,6 +1,6 @@
 core:
   admin_user: admin
-  admin_password: ${WIREGUARD_PORTAL_ADMIN_SERVICE_USER_PASSWORD}
+  admin_password: ${WIREGUARD_PORTAL_ADMIN_PASSWORD}
   admin_api_token: ${WIREGUARD_PORTAL_ADMIN_API_TOKEN}
 
 web:

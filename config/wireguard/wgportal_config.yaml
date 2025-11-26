@@ -5,4 +5,4 @@ core:
 
 web:
   external_url: http://49.13.87.41:8888
-  
+  listening_address: 172.21.0.2:8888

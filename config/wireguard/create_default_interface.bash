@@ -6,7 +6,7 @@ ENV_FILE="/srv/home-server/.env"
 WIREGUARD_PORTAL_ADMIN_API_TOKEN=$(grep '^WIREGUARD_PORTAL_ADMIN_API_TOKEN=' "$ENV_FILE" | cut -d '=' -f2-)
 
 INTERFACE_PRIVATE_KEY=$(docker exec -u root wireguard-vpn wg genkey)
-INTERFACE_PUBLIC_KEY=$(echo "$PRIVATE_KEY" | docker exec -i -u root wireguard-vpn wg pubkey)
+INTERFACE_PUBLIC_KEY=$(echo "$INTERFACE_PRIVATE_KEY" | docker exec -i -u root wireguard-vpn wg pubkey)
 
 
 INTERFACE_JSON=$(cat <<EOF

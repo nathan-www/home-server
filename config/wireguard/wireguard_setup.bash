@@ -51,6 +51,7 @@ docker exec -i wireguard-vpn curl -s -X POST \
   "Identifier": "$ADMIN_DEFAULT_PEER_PUBLIC_KEY",
   "InterfaceIdentifier": "wg0",
   "PrivateKey": "$ADMIN_DEFAULT_PEER_PRIVATE_KEY",
+  "PublicKey": "$ADMIN_DEFAULT_PEER_PUBLIC_KEY",
   "UserIdentifier": "admin",
   "DisplayName": "admin-default-peer"
 }

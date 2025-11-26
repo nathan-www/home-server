@@ -11,5 +11,5 @@
   "PreUp": "iptables -t nat -A POSTROUTING -d 10.8.0.0/24 -j MASQUERADE",
   "PeerDefEndpoint": "49.13.87.41:51820",
   "PeerDefNetwork": "10.255.0.0/24",
-  "PeerDefAllowedIPs": "10.8.0.0/24",
+  "PeerDefAllowedIPs": "10.8.0.0/24"
 }

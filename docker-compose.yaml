@@ -1,6 +1,7 @@
 services:
 
   wireguard-vpn:
+    container_name: wireguard-vpn
     image: wgportal/wg-portal:v2
     cap_add:
       - NET_ADMIN

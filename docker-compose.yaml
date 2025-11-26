@@ -12,7 +12,7 @@ services:
       - net.ipv4.conf.all.src_valid_mark=1
     environment:
        - WG_PORTAL_CONFIG=/etc/wg-portal/config.yaml
-       - WIREGUARD_PORTAL_ADMIN_SERVICE_USER_PASSWORD=${WIREGUARD_PORTAL_ADMIN_SERVICE_USER_PASSWORD}
+       - WIREGUARD_PORTAL_ADMIN_PASSWORD=${WIREGUARD_PORTAL_ADMIN_PASSWORD}
        - WIREGUARD_PORTAL_ADMIN_API_TOKEN=${WIREGUARD_PORTAL_ADMIN_API_TOKEN}
     volumes:
       - /srv/docker_data/wg_portal/:/app/data

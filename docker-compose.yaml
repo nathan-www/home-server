@@ -79,24 +79,11 @@ services:
       - /srv/docker_data/nextcloud_proxy_caddy/srv:/srv
       - ./nextcloud_proxy.Caddyfile:/etc/caddy/Caddyfile:ro
     networks:
+      admin-tools-net:
       nextcloud-net:
         ipv4_address: 172.20.0.10
       vpn-net:
         ipv4_address: 10.8.0.3
-
-  admin-tools-proxy:
-    image: caddy:alpine
-    restart: always
-    volumes:
-      - /srv/docker_data/admin_tools_proxy_caddy/certs:/certs
-      - /srv/docker_data/admin_tools_proxy_caddy/config:/config
-      - /srv/docker_data/admin_tools_proxy_caddy/data:/data
-      - /srv/docker_data/admin_tools_proxy_caddy/srv:/srv
-      - ./admin_tools_proxy.Caddyfile:/etc/caddy/Caddyfile:ro
-    networks:
-      admin-tools-net:
-      vpn-net:
-        ipv4_address: 10.8.0.4
 
   portainer:
     container_name: portainer
@@ -123,5 +110,5 @@ networks:
   admin-tools-net:
     ipam:
       config:
-        - subnet: 172.30.0.0/24
+        - subnet: 172.21.0.0/24
     

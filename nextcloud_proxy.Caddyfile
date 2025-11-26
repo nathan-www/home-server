@@ -1,5 +1,5 @@
 # =======================
-# Nextcloud proxy
+# Nextcloud
 # =======================
 
 https://cloud.internal:443 {
@@ -28,4 +28,13 @@ https://collabora.cloud.internal {
     header_up X-Forwarded-Proto {scheme}
     header_up Host {host}
   }
+}
+
+# =======================
+# Admin tools
+# =======================
+
+https://portainer.admin.internal:443 {
+  tls internal
+  reverse_proxy portainer:9000
 }

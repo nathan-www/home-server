@@ -1,8 +1,0 @@
-# =======================
-# Admin tools proxy
-# =======================
-
-https://portainer.admin.internal:443 {
-  tls internal
-  reverse_proxy portainer:9000
-}

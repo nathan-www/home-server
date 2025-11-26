@@ -38,3 +38,8 @@ https://portainer.admin.internal:443 {
   tls internal
   reverse_proxy portainer:9000
 }
+
+https://vpn.admin.internal:443 {
+  tls internal
+  reverse_proxy wireguard-vpn:8888
+}

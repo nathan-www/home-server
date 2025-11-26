@@ -2,6 +2,7 @@
 	pki {
 		ca local {
 			name "My Local CA"
+      root_cn "My Local CA - 2024 ECC Root"
 		}
 	}
 }

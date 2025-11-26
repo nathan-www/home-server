@@ -40,6 +40,7 @@ EOF
 # Create initial peer for admin
 
 ADMIN_DEFAULT_PEER_PRIVATE_KEY=$(docker exec -u root wireguard-vpn wg genkey)
+ADMIN_DEFAULT_PEER_PUBLIC_KEY=$(echo "$ADMIN_DEFAULT_PEER_PRIVATE_KEY" | docker exec -i -u root wireguard-vpn wg pubkey)
 
 docker exec -i wireguard-vpn curl -s -X POST \
   -u "admin:$WIREGUARD_PORTAL_ADMIN_API_TOKEN" \
@@ -47,9 +48,11 @@ docker exec -i wireguard-vpn curl -s -X POST \
   -d @- \
   http://localhost:8888/api/v1/peer/new <<EOF
 {
-  "Identifier": "admin-default-peer",
+  "Identifier": "$ADMIN_DEFAULT_PEER_PUBLIC_KEY",
   "InterfaceIdentifier": "wg0",
-  "PrivateKey": "$ADMIN_DEFAULT_PEER_PRIVATE_KEY"
+  "PrivateKey": "$ADMIN_DEFAULT_PEER_PRIVATE_KEY",
+  "UserIdentifier": "admin",
+  "DisplayName": "admin-default-peer"
 }
 EOF
 

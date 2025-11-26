@@ -1,9 +1,12 @@
 #!/bin/bash
 
-# Create default wireguard wg0 interface
+# Initial setup for Wireguard
 
 ENV_FILE="/srv/home-server/.env"
 WIREGUARD_PORTAL_ADMIN_API_TOKEN=$(grep '^WIREGUARD_PORTAL_ADMIN_API_TOKEN=' "$ENV_FILE" | cut -d '=' -f2-)
+
+
+# Create default interface (wg0)
 
 INTERFACE_PRIVATE_KEY=$(docker exec -u root wireguard-vpn wg genkey)
 INTERFACE_PUBLIC_KEY=$(echo "$INTERFACE_PRIVATE_KEY" | docker exec -i -u root wireguard-vpn wg pubkey)
@@ -33,3 +36,20 @@ docker exec -i wireguard-vpn curl -s -X POST \
   ]
 }
 EOF
+
+# Create initial peer for admin
+
+ADMIN_DEFAULT_PEER_PRIVATE_KEY=$(docker exec -u root wireguard-vpn wg genkey)
+
+docker exec -i wireguard-vpn curl -s -X POST \
+  -u "admin:$WIREGUARD_PORTAL_ADMIN_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d @- \
+  http://localhost:8888/api/v1/peer/new <<EOF
+{
+  "Identifier": "admin-default-peer",
+  "InterfaceIdentifier": "wg0",
+  "PrivateKey": "$ADMIN_DEFAULT_PEER_PRIVATE_KEY"
+}
+EOF
+

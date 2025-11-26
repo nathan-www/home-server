@@ -6,8 +6,7 @@ services:
     cap_add:
       - NET_ADMIN
     ports:
-      - "51820:51820/udp" 
-      - "8888:8888/tcp"
+      - "51820:51820/udp"
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
     environment:

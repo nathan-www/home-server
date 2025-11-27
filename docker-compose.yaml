@@ -21,6 +21,8 @@ services:
       vpn-net:
       admin-tools-net:
         ipv4_address: 172.21.0.10
+      vpn-hop-net:
+        ipv4_address: 172.22.0.10
 
   wireguard-vpn-second-hop:
     image: lscr.io/linuxserver/wireguard:latest
@@ -36,7 +38,9 @@ services:
       - /srv/docker_data/wireguard_vpn_second_hop:/config
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
-    network_mode: "service:wireguard-vpn-server"
+    networks:
+      vpn-hop-net:
+        ipv4_address: 172.22.0.11
 
   nextcloud-db:
     image: mariadb:10.6
@@ -114,6 +118,11 @@ services:
       - admin-tools-net
 
 networks:
+  vpn-hop-net:
+    ipam:
+      config:
+        - subnet: 172.22.0.0/24
+
   vpn-net:
     ipam:
       config:

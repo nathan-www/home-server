@@ -16,7 +16,7 @@ services:
        - WIREGUARD_PORTAL_ADMIN_API_TOKEN=${WIREGUARD_PORTAL_ADMIN_API_TOKEN}
     volumes:
       - /srv/docker_data/wireguard_vpn_server/:/app/data
-      - ./config/wireguard_server_conf:/etc/wg-portal/config.yaml:ro
+      - ./config/wireguard_server_conf.yaml:/etc/wg-portal/config.yaml:ro
     networks:
       vpn-net:
       admin-tools-net:

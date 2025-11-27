@@ -40,6 +40,7 @@ services:
       - /srv/docker_data/wireguard_vpn_second_hop:/config
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
+      - net.ipv4.ip_forward=1
     networks:
       vpn-hop-net:
         ipv4_address: 172.22.0.11

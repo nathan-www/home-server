@@ -15,7 +15,7 @@ docker exec -i wireguard-vpn-server curl -s -X POST \
   -u "admin:$WIREGUARD_PORTAL_ADMIN_API_TOKEN" \
   -H "Content-Type: application/json" \
   -d @- \
-  http://localhost:8888/api/v1/interface/new <<EOF
+  http://172.21.0.10:8888/api/v1/interface/new <<EOF
 {
   "Identifier": "wg0",
   "DisplayName": "wg0",
@@ -43,7 +43,7 @@ ADMIN_DEFAULT_PEER_PRIVATE_KEY=$(docker exec -u root wireguard-vpn-server wg gen
 ADMIN_DEFAULT_PEER_PUBLIC_KEY=$(echo "$ADMIN_DEFAULT_PEER_PRIVATE_KEY" | docker exec -i -u root wireguard-vpn-server wg pubkey)
 
 ADMIN_DEFAULT_PEER_JSON=$(docker exec -i wireguard-vpn-server curl\
-  http://localhost:8888/api/v1/peer/prepare/wg0 \
+  http://172.21.0.10:8888/api/v1/peer/prepare/wg0 \
   -u "admin:$WIREGUARD_PORTAL_ADMIN_API_TOKEN" \
 )
 
@@ -51,5 +51,5 @@ docker exec -i wireguard-vpn-server curl -s -X POST \
   -u "admin:$WIREGUARD_PORTAL_ADMIN_API_TOKEN" \
   -H "Content-Type: application/json" \
   -d "$ADMIN_DEFAULT_PEER_JSON" \
-  http://localhost:8888/api/v1/peer/new;
+  http://172.21.0.10:8888/api/v1/peer/new;
 

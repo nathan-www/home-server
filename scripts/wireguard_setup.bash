@@ -8,10 +8,10 @@ WIREGUARD_PORTAL_ADMIN_API_TOKEN=$(grep '^WIREGUARD_PORTAL_ADMIN_API_TOKEN=' "$E
 
 # Create default interface (wg0)
 
-INTERFACE_PRIVATE_KEY=$(docker exec -u root wireguard-vpn wg genkey)
-INTERFACE_PUBLIC_KEY=$(echo "$INTERFACE_PRIVATE_KEY" | docker exec -i -u root wireguard-vpn wg pubkey)
+INTERFACE_PRIVATE_KEY=$(docker exec -u root wireguard-vpn-server wg genkey)
+INTERFACE_PUBLIC_KEY=$(echo "$INTERFACE_PRIVATE_KEY" | docker exec -i -u root wireguard-vpn-server wg pubkey)
 
-docker exec -i wireguard-vpn curl -s -X POST \
+docker exec -i wireguard-vpn-server curl -s -X POST \
   -u "admin:$WIREGUARD_PORTAL_ADMIN_API_TOKEN" \
   -H "Content-Type: application/json" \
   -d @- \
@@ -39,15 +39,15 @@ EOF
 
 # Create initial peer for admin
 
-ADMIN_DEFAULT_PEER_PRIVATE_KEY=$(docker exec -u root wireguard-vpn wg genkey)
-ADMIN_DEFAULT_PEER_PUBLIC_KEY=$(echo "$ADMIN_DEFAULT_PEER_PRIVATE_KEY" | docker exec -i -u root wireguard-vpn wg pubkey)
+ADMIN_DEFAULT_PEER_PRIVATE_KEY=$(docker exec -u root wireguard-vpn-server wg genkey)
+ADMIN_DEFAULT_PEER_PUBLIC_KEY=$(echo "$ADMIN_DEFAULT_PEER_PRIVATE_KEY" | docker exec -i -u root wireguard-vpn-server wg pubkey)
 
-ADMIN_DEFAULT_PEER_JSON=$(docker exec -i wireguard-vpn curl\
+ADMIN_DEFAULT_PEER_JSON=$(docker exec -i wireguard-vpn-server curl\
   http://localhost:8888/api/v1/peer/prepare/wg0 \
   -u "admin:$WIREGUARD_PORTAL_ADMIN_API_TOKEN" \
 )
 
-docker exec -i wireguard-vpn curl -s -X POST \
+docker exec -i wireguard-vpn-server curl -s -X POST \
   -u "admin:$WIREGUARD_PORTAL_ADMIN_API_TOKEN" \
   -H "Content-Type: application/json" \
   -d "$ADMIN_DEFAULT_PEER_JSON" \

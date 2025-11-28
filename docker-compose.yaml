@@ -1,5 +1,4 @@
 services:
-
   wireguard-vpn-server:
     container_name: wireguard-vpn-server
     image: wgportal/wg-portal:v2
@@ -13,9 +12,9 @@ services:
       - net.ipv4.conf.all.src_valid_mark=1
       - net.ipv4.ip_forward=1
     environment:
-       - WG_PORTAL_CONFIG=/etc/wg-portal/config.yaml
-       - WIREGUARD_PORTAL_ADMIN_PASSWORD=${WIREGUARD_PORTAL_ADMIN_PASSWORD}
-       - WIREGUARD_PORTAL_ADMIN_API_TOKEN=${WIREGUARD_PORTAL_ADMIN_API_TOKEN}
+      - WG_PORTAL_CONFIG=/etc/wg-portal/config.yaml
+      - WIREGUARD_PORTAL_ADMIN_PASSWORD=${WIREGUARD_PORTAL_ADMIN_PASSWORD}
+      - WIREGUARD_PORTAL_ADMIN_API_TOKEN=${WIREGUARD_PORTAL_ADMIN_API_TOKEN}
     volumes:
       - /srv/docker_data/wireguard_vpn_server/:/app/data
       - ./config/wireguard_server_conf.yaml:/etc/wg-portal/config.yaml:ro
@@ -41,6 +40,7 @@ services:
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
       - net.ipv4.ip_forward=1
+    command: ["iptables -t nat -A POSTROUTING -o proton -j MASQUERADE"]
     networks:
       vpn-hop-net:
         ipv4_address: 172.22.0.11
@@ -58,7 +58,7 @@ services:
       - MYSQL_USER=nextcloud
     networks:
       - nextcloud-net
-     
+
   nextcloud:
     image: nextcloud
     restart: always
@@ -130,7 +130,7 @@ networks:
     ipam:
       config:
         - subnet: 10.8.0.0/24
-        
+
   nextcloud-net:
     driver: bridge
     ipam:
@@ -141,4 +141,3 @@ networks:
     ipam:
       config:
         - subnet: 172.21.0.0/24
-    

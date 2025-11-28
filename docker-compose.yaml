@@ -20,11 +20,12 @@ services:
       - /srv/docker_data/wireguard_vpn_server/:/app/data
       - ./config/wireguard_server_conf.yaml:/etc/wg-portal/config.yaml:ro
     networks:
+      vpn-hop-net:
+        ipv4_address: 172.22.0.10
+        gateway: 172.22.0.11 
       vpn-net:
       admin-tools-net:
         ipv4_address: 172.21.0.10
-      vpn-hop-net:
-        ipv4_address: 172.22.0.10
 
   wireguard-vpn-second-hop:
     image: lscr.io/linuxserver/wireguard:latest

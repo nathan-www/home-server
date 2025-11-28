@@ -40,7 +40,7 @@ services:
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
       - net.ipv4.ip_forward=1
-    command: ["iptables -t nat -A POSTROUTING -o proton -j MASQUERADE"]
+    command: sh -c "iptables -t nat -A POSTROUTING -o proton -j MASQUERADE"
     networks:
       vpn-hop-net:
         ipv4_address: 172.22.0.11

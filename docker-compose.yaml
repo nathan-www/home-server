@@ -1,29 +1,25 @@
 services:
-  wireguard-vpn-server:
-    container_name: wireguard-vpn-server
-    image: wgportal/wg-portal:v2
+
+  wgdashboard:
+    container_name: wgdashboard
+    image: ghcr.io/wgdashboard/wgdashboard:latest
     restart: always
-    cap_add:
-      - NET_ADMIN
     ports:
-      - "51820:51820/udp"
-      - 8888:8888
+      - 10086:10086/tcp
+      - 51820:51820/udp
+    volumes:
+      - /srv/docker_data/wgdashbord/aconf:/etc/amnezia/amneziawg
+      - /srv/docker_data/wgdashbord/conf:/etc/wireguard
+      - /srv/docker_data/wgdashbord/data:/data
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
       - net.ipv4.ip_forward=1
-    environment:
-      - WG_PORTAL_CONFIG=/etc/wg-portal/config.yaml
-      - WIREGUARD_PORTAL_ADMIN_PASSWORD=${WIREGUARD_PORTAL_ADMIN_PASSWORD}
-      - WIREGUARD_PORTAL_ADMIN_API_TOKEN=${WIREGUARD_PORTAL_ADMIN_API_TOKEN}
-    volumes:
-      - /srv/docker_data/wireguard_vpn_server/:/app/data
-      - ./config/wireguard_server_conf.yaml:/etc/wg-portal/config.yaml:ro
+    cap_add:
+      - NET_ADMIN
     networks:
       vpn-hop-net:
         ipv4_address: 172.22.0.10
       vpn-net:
-      admin-tools-net:
-        ipv4_address: 172.21.0.10
 
   wireguard-vpn-second-hop:
     image: lscr.io/linuxserver/wireguard:latest

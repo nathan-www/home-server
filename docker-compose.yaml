@@ -8,12 +8,17 @@ services:
       - 10086:10086/tcp
       - 51820:51820/udp
     volumes:
-      - /srv/docker_data/wgdashbord/aconf:/etc/amnezia/amneziawg
-      - /srv/docker_data/wgdashbord/conf:/etc/wireguard
-      - /srv/docker_data/wgdashbord/data:/data
+      - /srv/docker_data/wgdashboard/aconf:/etc/amnezia/amneziawg
+      - /srv/docker_data/wgdashboard/conf:/etc/wireguard
+      - /srv/docker_data/wgdashboard/data:/data
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
       - net.ipv4.ip_forward=1
+      - net.ipv4.conf.all.rp_filter=0
+      - net.ipv4.conf.default.rp_filter=0
+      - net.ipv4.conf.eth0.rp_filter=0
+      - net.ipv4.conf.eth1.rp_filter=0
+      - net.ipv4.conf.wg0.rp_filter=0
     cap_add:
       - NET_ADMIN
     networks:

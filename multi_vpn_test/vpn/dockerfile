@@ -7,7 +7,7 @@ RUN apt-get update && \
         wireguard-go \
         openresolv \
         iproute2 \
-        iptables && \
+        iptables \
         procps && \
     rm -rf /var/lib/apt/lists/*
 

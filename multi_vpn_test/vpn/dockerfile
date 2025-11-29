@@ -8,6 +8,7 @@ RUN apt-get update && \
         openresolv \
         iproute2 \
         iptables && \
+        procps && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy entrypoint script

@@ -2,7 +2,12 @@ FROM debian:12-slim
 
 # Install WireGuard and necessary tools
 RUN apt-get update && \
-    apt-get install -y wireguard-tools iproute2 iptables && \
+    apt-get install -y --no-install-recommends \
+        wireguard-tools \
+        wireguard-go \
+        openresolv \
+        iproute2 \
+        iptables && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy entrypoint script

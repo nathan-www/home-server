@@ -3,6 +3,7 @@ services:
   vpn:
     container_name: vpn
     image: debian:12-slim
+    restart: always
     ports:
       - 51820:51820/udp
     sysctls:

@@ -52,3 +52,8 @@ https://vpn.admin.internal:443 {
   tls internal
   reverse_proxy wireguard-vpn-server:10086
 }
+
+https://dns.admin.internal:443 {
+  tls internal
+  reverse_proxy adguard-dns:3000
+}

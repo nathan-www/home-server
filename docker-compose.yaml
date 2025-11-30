@@ -53,6 +53,7 @@ services:
     networks:
       vpn-net:
         ipv4_address: 10.8.0.4
+      admin-tools-net:
 
   nextcloud-db:
     image: mariadb:10.6

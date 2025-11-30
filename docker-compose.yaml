@@ -36,7 +36,7 @@ services:
       - PGID=1000
       - TZ=Etc/UTC
     volumes:
-      - /srv/docker_data/wireguard_vpn_second_hop/wg-second-hop.conf:/config/wg_confs/wireguard_vpn_second_hop.conf:ro
+      - /srv/docker_data/wireguard_vpn_second_hop/wg-second-hop.conf:/config/wg_confs/wg-second-hop.conf:ro
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
       - net.ipv4.ip_forward=1

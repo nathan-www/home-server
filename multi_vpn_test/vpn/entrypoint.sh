@@ -14,7 +14,7 @@ if [ ! -f /etc/wireguard/wg-second-hop.conf ]; then
 fi
 
 # Bring up second hop interface first
-wg-quick up wg-second-hop
+# wg-quick up wg-second-hop
 
 # Bring up server (wg0) next
 wg-quick up wg0

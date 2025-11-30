@@ -15,6 +15,9 @@ services:
       - net.ipv4.ip_forward=1
     cap_add:
       - NET_ADMIN
+    evnironment:
+      - username=admin
+      - password=${WIREGUARD_PORTAL_ADMIN_PASSWORD}
     networks:
       vpn-hop-net:
         ipv4_address: 172.22.0.10

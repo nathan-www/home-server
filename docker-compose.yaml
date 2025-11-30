@@ -23,6 +23,7 @@ services:
         ipv4_address: 172.22.0.10
       vpn-net:
       admin-tools-net:
+        ipv4_address: 172.21.0.10
 
   wireguard-vpn-second-hop:
     image: lscr.io/linuxserver/wireguard:latest

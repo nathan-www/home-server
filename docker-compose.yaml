@@ -36,13 +36,22 @@ services:
       - PGID=1000
       - TZ=Etc/UTC
     volumes:
-      - /srv/docker_data/wireguard_vpn_second_hop/proton.conf:/config/wg_confs/proton.conf:ro
+      - /srv/docker_data/wireguard_vpn_second_hop/wg-second-hop.conf:/config/wg_confs/proton.conf:ro
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
       - net.ipv4.ip_forward=1
     networks:
       vpn-hop-net:
         ipv4_address: 172.22.0.11
+
+  adguard-dns:
+    image: adguard/adguardhome
+    restart: always
+    volumes:
+      - /srv/docker_data/adguard_dns/:/opt/adguardhome
+    networks:
+      vpn-net:
+        ipv4_address: 10.8.0.4
 
   nextcloud-db:
     image: mariadb:10.6

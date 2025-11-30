@@ -16,12 +16,6 @@ services:
       - net.ipv4.ip_forward=1
     cap_add:
       - NET_ADMIN
-    healthcheck:
-      test: ["CMD-SHELL", "ip link show wg0 >/dev/null 2>&1 || exit 1"]
-      interval: 30s
-      timeout: 5s
-      retries: 3
-      start_period: 10s
     networks:
       vpn-hop-net:
         ipv4_address: 172.22.0.10
@@ -42,10 +36,6 @@ services:
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
       - net.ipv4.ip_forward=1
-    depends_on:
-      wgdashboard:
-        condition: service_healthy
-        restart: true
     networks:
       vpn-hop-net:
         ipv4_address: 172.22.0.11

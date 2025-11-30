@@ -48,7 +48,8 @@ services:
     image: adguard/adguardhome
     restart: always
     volumes:
-      - /srv/docker_data/adguard_dns/:/opt/adguardhome
+      - /srv/docker_data/adguard_dns/work:/opt/adguardhome/work
+      - /srv/docker_data/adguard_dns/conf:/opt/adguardhome/conf
     networks:
       vpn-net:
         ipv4_address: 10.8.0.4

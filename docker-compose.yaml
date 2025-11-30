@@ -5,7 +5,6 @@ services:
     image: ghcr.io/wgdashboard/wgdashboard:latest
     restart: always
     ports:
-      - 10086:10086/tcp
       - 51820:51820/udp
     volumes:
       - /srv/docker_data/wgdashboard/aconf:/etc/amnezia/amneziawg

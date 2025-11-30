@@ -1,8 +1,0 @@
-core:
-  admin_user: admin
-  admin_password: ${WIREGUARD_PORTAL_ADMIN_PASSWORD}
-  admin_api_token: ${WIREGUARD_PORTAL_ADMIN_API_TOKEN}
-
-web:
-  external_url: http://49.13.87.41:8888
-  listening_address: 172.21.0.10:8888

@@ -1,0 +1,15 @@
+[Interface]
+# Proton VPN configuration
+# This interface connects to Proton VPN and routes all traffic through it
+PrivateKey = YOUR_PROTON_VPN_PRIVATE_KEY_HERE
+Address = 10.2.0.2/32
+DNS = 10.2.0.1
+
+[Peer]
+# Proton VPN server
+PublicKey = JuU8atNk6x75cZiCI8TuYnnDfFs4MUSZZomSWKKl1Rs=
+AllowedIPs = 0.0.0.0/0, ::/0
+Endpoint = 146.70.226.194:51820
+
+# Note: AllowedIPs = 0.0.0.0/0, ::/0 means ALL traffic will be routed
+# through this Proton VPN connection. This is what we want for the second hop.

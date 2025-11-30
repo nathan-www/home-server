@@ -1,0 +1,17 @@
+[Interface]
+PrivateKey = YOUR_WG0_PRIVATE_KEY_HERE
+Address = 10.255.0.1/24
+ListenPort = 51820
+
+# PostUp and PreDown rules are handled by entrypoint.sh
+# but you can add custom rules here if needed
+
+[Peer]
+# Peer 1
+PublicKey = eaa8CqWUny/CBxVEzPW5EuifY+rKWVj/sLqGv63hc3I=
+AllowedIPs = 10.255.0.2/32
+
+# Add more peers as needed
+# [Peer]
+# PublicKey = ANOTHER_PEER_PUBLIC_KEY
+# AllowedIPs = 10.255.0.3/32

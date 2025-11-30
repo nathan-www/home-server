@@ -1,6 +1,7 @@
 FROM debian:12-slim
 
-# Install WireGuard and necessary tools
+ENV DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         wireguard-tools \
@@ -8,12 +9,17 @@ RUN apt-get update && \
         openresolv \
         iproute2 \
         iptables \
-        procps && \
+        procps \
+        bash \
+        ca-certificates && \
     rm -rf /var/lib/apt/lists/*
 
-# Copy entrypoint script
+# Patch wg-quick
+RUN sed -i 's|\[\[ $proto == -4 \]\] && cmd sysctl -q net\.ipv4\.conf\.all\.src_valid_mark=1|[[ $proto == -4 ]] \&\& [[ $(sysctl -n net.ipv4.conf.all.src_valid_mark 2>/dev/null) != 1 ]] \&\& cmd sysctl -q net.ipv4.conf.all.src_valid_mark=1|' /usr/bin/wg-quick
+
+WORKDIR /etc/wireguard
+
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-# Start WireGuard
 ENTRYPOINT ["/entrypoint.sh"]

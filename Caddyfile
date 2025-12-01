@@ -65,6 +65,10 @@ http://nacloudcert.internal {
 
   handle /root.crt {
         root * /data/caddy/pki/authorities/local
+        header {
+            Content-Type application/x-x509-ca-cert
+            Content-Disposition "attachment; filename=root.crt"
+        }
         file_server
     }
 

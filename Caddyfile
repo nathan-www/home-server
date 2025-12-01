@@ -57,3 +57,15 @@ https://dns.admin.internal:443 {
   tls internal
   reverse_proxy adguard-dns:80
 }
+
+# =======================
+# Root cert download
+# =======================
+http://nacloudcert.internal {
+
+  handle /root.crt {
+        root * /data/caddy/pki/authorities/local
+        file_server
+    }
+
+}

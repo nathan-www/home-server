@@ -77,6 +77,9 @@ services:
       - /srv/docker_data/nextcloud:/var/www/html
     environment:
       - NEXTCLOUD_TRUSTED_DOMAINS=cloud.internal
+      - OVERWRITECLIURL=https://cloud.internal
+      - OVERWRITEPROTOCOL=https
+      - OVERWRITEHOST=cloud.internal
       - MYSQL_PASSWORD=${NEXTCLOUD_DB_MYSQL_PASSWORD}
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=nextcloud
